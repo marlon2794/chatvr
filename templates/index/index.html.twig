@@ -1,0 +1,128 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Chat-vr{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="css/chatvr_style.css"/>
+{% endblock %}
+
+{% block body %}
+    <section class="instructions">
+        <button type="button" class="hide">Hide</button>
+        <h1>Chat-VR</h1>
+        <p>Otorgue permiso a este sitio para acceder a su micrófono y compartir el siguiente enlace con sus amigos (o abrirlo en otro navegador / pestaña). Espera a que un amigo se ponga</p>
+        <span class="link"></span>
+        <a class="move" href="/chatvr">Cambiar de sala.</a>
+    </section>
+    <a-scene embedded>
+        <!-- <a-scene embedded fog="type: linear; color: #333; near:5; far:15">  fog añade neblina-->
+        <a-assets>
+            <a-mixin id="foliage" material="color:#849812"></a-mixin>
+            <a-mixin id="user" visible="false" look-controls wasd-controls share="position, rotation"></a-mixin>
+        </a-assets>
+        <a-entity sharedspace="hold: true" avatars="onmyself: user">
+
+            <!-- Room -->
+            <!-- Sky-->
+            <a-box class="sky" position="0 3 0" scale="15 0.5 15" color="#FFFFFF"></a-box>
+
+            <!---Light-->
+            <a-box class="light" position="0 2.85 0" scale="0.5 0.25 0.5" color="#736868"></a-box>
+            <a-sphere class="light" position="0 2.9 0" color="yellow" radius="0.25"></a-sphere>
+
+            <a-box class="light" position="-7.25 2.85 -7.25" scale="0.5 0.25 0.5" color="#736868"></a-box>
+            <a-sphere class="light" position="-7.25 2.9 -7.25" color="yellow" radius="0.25"></a-sphere>
+
+            <a-box class="light" position="-7.25 2.85 7.25" scale="0.5 0.25 0.5" color="#736868"></a-box>
+            <a-sphere class="light" position="-7.25 2.9 7.25" color="yellow" radius="0.25"></a-sphere>
+
+            <a-box class="light" position="7.25 2.85 7.25" scale="0.5 0.25 0.5" color="#736868"></a-box>
+            <a-sphere class="light" position="7.25 2.9 7.25" color="yellow" radius="0.25"></a-sphere>
+
+            <a-box class="light" position="7.25 2.85 -7.25" scale="0.5 0.25 0.5" color="#736868"></a-box>
+            <a-sphere class="light" position="7.25 2.9 -7.25" color="yellow" radius="0.25"></a-sphere>
+
+            <a-sky color="#333"></a-sky>
+            <!-- Ground-->
+            <a-plane rotation="-90 0 0" width="15" height="15" color="#777"></a-plane>
+
+            <!-- Walls-->
+            <a-box class="wall" position="7.75 1.25 0" scale="0.5 3 16" color="#000000"></a-box>
+            <a-box class="wall" position="-7.75 1.25 0" scale="0.5 3 16" color="#000000"></a-box>
+            <a-box class="wall" position="0 1.25 7.75" scale="15 3 0.5" color="#000000"></a-box>
+            <a-box class="wall" position="0 1.25 -7.75" scale="15 3 0.5" color="#000000"></a-box>
+
+            <!-- Table -->
+            <a-cylinder class="table" position="0 1.25 0" height="0.02" color="#490810" segments-height="1" segments-radial="6"></a-cylinder>
+            <!--<a-cylinder class="base_table" position="0 0 0" height="3" radius="0.2" color="#000000"></a-cylinder>-->
+
+            <a-cylinder class="base_table" position="-0.76 0.6 -0.40" color="#000000" height="1.25" radius="0.1"></a-cylinder>
+            <a-cylinder class="base_table" position="-0.76 0.6 0.44" color="#000000" height="1.25" radius="0.1"></a-cylinder>
+            <a-cylinder class="base_table" position="0 0.6 0.88" color="#000000" height="1.25" radius="0.1"></a-cylinder>
+            <a-cylinder class="base_table" position="0 0.6 -0.88" color="#000000" height="1.25" radius="0.1"></a-cylinder>
+            <a-cylinder class="base_table" position="0.76 0.6 0.4" color="#000000" height="1.25" radius="0.1"></a-cylinder>
+            <a-cylinder class="base_table" position="0.76 0.6 -0.4" color="#000000" height="1.25" radius="0.1"></a-cylinder>
+
+            <!-- Base Table -->
+            <a-cone color="tomato" position="0 0 0" radius-bottom="0.5" radius-top="0.1" height="3"></a-cone>
+
+            <!-- Pizarron -->
+            <!--<a-plane position="0 0 -7.4" rotation="0 0 90" width="8" height="8" color="#FFFFFF"></a-plane>-->
+            <a-box class="whiteboard" position="0 1.5 -7.5" scale="8 2 0.5" color="#FFFFFF"></a-box>
+            <a-text class="whiteboard_text" value="Hello, World!" position="0 1.5 -7.25" color="#000000"></a-text>
+
+            <!-- Carpet -->
+            <a-cylinder class="carpet" radius="3" height="0.02" color="#424949" segments-height="1" segments-radial="6"></a-cylinder>
+
+            <a-entity class="tree" position="-7 1 7">
+                <lp-cylinder class="trunk reseed" radius-top="0.01" radius-bottom="0.1" height="2" color="#A5602D"></lp-cylinder>
+                <lp-cone class="reseed" radius="0.35" height="0.7" segments-height="5" mixin="foliage" position="0 1.1 0"></lp-cone>
+                <lp-cone class="reseed" radius="0.5" height="0.8" segments-height="3" mixin="foliage" position="0 0.7 0" seed="1"></lp-cone>
+                <lp-cone class="reseed" radius="0.6" height="0.8" segments-height="3" mixin="foliage" position="0 0.4 0" seed="2"></lp-cone>
+                <lp-cone class="reseed" radius="0.7" height="0.8" segments-height="3" mixin="foliage" position="0 0 0" seed="3"></lp-cone>
+                <a-cone color="tomato" radius-bottom="0.2" radius-top="0.5" height="0.4" position="0 -0.75 0"></a-cone>
+            </a-entity>
+
+            <a-entity id="sun" position="-7 0 -7">
+                <a-cylinder radius-top="0.01" radius="0.01" color="#333" height="4" position="0 1.75 0"></a-cylinder>
+                <!--<a-entity light="type: point; intensity: 0.5; distance: 50; decay: 2" position="-0.5 -0.5 0"></a-entity>-->
+                <lp-sphere class="reseed" color="#f4cb6b" radius="0.6"></lp-sphere>
+                <a-animation attribute="position" from="-7 2 -7" to="-7 1.5 -7" direction="alternate" repeat="indefinite" dur="5000"></a-animation>
+            </a-entity>
+
+            <a-entity id="cloud" position="-7 1.5 -7">
+                <a-cylinder radius-top="0.01" radius="0.01" color="#333" height="5" position="0 2.5 0"></a-cylinder>
+                <lp-box class="reseed" rotation="20 0 5" position="-0.5 0 0" color="#c6e0ef" height="0.5" width="0.5" depth="0.5" segments-height="2" segments-width="2" segments-depth="2" ></lp-box>
+                <lp-box class="reseed" rotation="0 15 0" color="#c6e0ef" height="0.65" width="0.65" depth="0.65" segments-height="2" segments-width="2" segments-depth="2" ></lp-box>
+                <lp-box class="reseed" rotation="-30 -10 0" position="0.5 0 0" color="#c6e0ef" height="0.5" width="0.5" depth="0.5" segments-height="2" segments-width="2" segments-depth="2" ></lp-box>
+                <a-animation attribute="position" from="6.5 1.5 -7" to="5.5 1.5 -7" direction="alternate" repeat="indefinite" dur="7000"></a-animation>
+            </a-entity>
+
+            <a-entity class="tree" id="tree" scale="0.75 0.75 0.75" position="7 1 7">
+                <lp-cylinder class="trunk reseed" radius-top="0.02" radius-bottom="0.3" height="2.5" color="#795110" position="0 0.25 0"></lp-cylinder>
+                <lp-sphere class="reseed" position="0 0.6 0" color="#59810C" radius="1" segments-width="10" segments-height="10"></lp-sphere>
+            </a-entity>
+
+        </a-entity>
+
+    </a-scene>
+    <template>
+        <a-entity>
+            <a-sphere radius="0.1" color="#ffffff"></a-sphere>
+            <a-sphere position="0.05 0.03 -0.08" radius="0.02" segments-width="8" segments-height="8" color="#000000"></a-sphere>
+            <a-sphere position="-0.05 0.03 -0.08" radius="0.02" segments-width="8" segments-height="8" color="#000000"></a-sphere>
+            <a-sphere class="themable" position="0 -0.07 -0.1" scale="1 1 0.5" segments-width="4" segments-height="4" radius="0.02" color="#11fd3e"></a-sphere>
+            <a-cone class="themable" position="0.03 -0.07 -0.1" rotation="0 0 90" scale="1 1 0.5" segments-radial="8" segments-height="1" height="0.03" radius-bottom="0.03"  color="#1cff3c"></a-cone>
+            <a-cone class="themable" position="-0.03 -0.07 -0.1" rotation="0 0 -90" scale="1 1 0.5" segments-radial="8" segments-height="1" height="0.03" radius-bottom="0.03"  color="#1cff3c"></a-cone>
+        </a-entity>
+        <!--<a-entity>
+        <a-entity obj-model="obj: url(https://cdn.glitch.com/4e53a88a-96d2-46e5-ab4b-f8f1b9c2d486%2Fface.obj?1506059732633)" rotation="0 180 0" scale="0.01 0.01 0.01"></a-entity>
+
+        Anime Face Model Stocking(https://sketchfab.com/models/d049b6a85d204057b170ef9dbc851200) by stocking(https://sketchfab.com/stocking) is licensed under CC Attribution(http://creativecommons.org/licenses/by/4.0/)
+
+        </a-entity> -->
+    </template>
+
+
+    <script src="js/chatvrScript.js"></script>
+{% endblock %}
