@@ -18,6 +18,8 @@
         <!-- <a-scene embedded fog="type: linear; color: #333; near:5; far:15">  fog añade neblina-->
         <a-assets>
             <a-mixin id="foliage" material="color:#849812"></a-mixin>
+
+            <!--Este tag mixim permite utilizar controles de movimiento para los avatares-->
             <a-mixin id="user" visible="false" look-controls wasd-controls share="position, rotation"></a-mixin>
         </a-assets>
         <a-entity sharedspace="hold: true" avatars="onmyself: user">
