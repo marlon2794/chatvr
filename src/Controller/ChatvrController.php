@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class IndexController extends AbstractController
+class ChatvrController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/chatvr", name="chatvr")
      */
     public function index(): Response
     {
-        return $this->render('index/index.html.twig');
+        return $this->render('chatvr/index.html.twig');
     }
 }

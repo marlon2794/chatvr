@@ -50,8 +50,8 @@ if (!roomName) {
     console.log('Room name: '+ roomName);
     console.log('Link Room: '+ window.location + '?' + roomName);
     history.pushState({}, '', window.location + `?${roomName}`);
-    alert("Link de la reunion: "+ window.location + '?' + roomName)
-    hideButton.click();
+    //alert("Link de la reunion: "+ window.location + '?' + roomName)
+    //hideButton.click();
 }
 else {
     hideButton.click();

@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class IndexController extends AbstractController
+class VirtualRealityController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/virtual-reality", name="virtual_reality")
      */
     public function index(): Response
     {
-        return $this->render('index/index.html.twig');
+        return $this->render('virtual_reality/index.html.twig');
     }
 }

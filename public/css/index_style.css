@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 14pt;
+    font-family: sans-serif;
+}
+
+.body {
+    color: forestgreen;
+}
+
+.jumbotron {
+    background-color: teal;
+    color: white;
+}
+.btn {
+    background-color: lightseagreen;
+    color: white;
+    border-color: darkblue;
+}
+
+.container {
+    align-content: center;
+}
+
+.jumbocol {
+    text-align: center;
+    width: 200px;
+    height: 350px;
+}
+
+img {
+    margin: 0.5rem;
+    border-color: darkblue;
+    border-radius: 2rem;
+}
