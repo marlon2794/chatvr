@@ -20,25 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14afc7b3-87d8-413f-8f02-e7e9338d642f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/css/index_style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/ethicalh.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/iot.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/machinel.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/programacion.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/redes.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/servidores.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/sistemase.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/vr.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/ChatvrController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/VirtualRealityController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/chatvr/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/virtual_reality/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/virtual_reality/avatar.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/virtual_reality/chat-vr.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/chatvr_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/chatvr_style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/chatvrScript.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/chatvrScript.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/IndexController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AvatarController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AvatarController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/VirtualRealityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/VirtualRealityController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/avatar/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/avatar/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/chatvr/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/chatvr/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -223,7 +211,8 @@
       <updated>1605676045957</updated>
       <workItem from="1605676047503" duration="2863000" />
       <workItem from="1605732488027" duration="6901000" />
-      <workItem from="1605756705106" duration="9568000" />
+      <workItem from="1605756705106" duration="9641000" />
+      <workItem from="1605804040551" duration="441000" />
     </task>
     <servers />
   </component>
