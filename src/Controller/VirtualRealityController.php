@@ -31,4 +31,20 @@ class VirtualRealityController extends AbstractController
     {
         return $this->render('virtual_reality/chat-vr.html.twig');
     }
+
+    /**
+     * @Route("/spacevr", name="spacevr")
+     */
+    public function spaceVr(): Response
+    {
+        return $this->render('virtual_reality/space-vr.html.twig');
+    }
+
+    /**
+     * @Route("/xx", name="xx")
+     */
+    public function xx(): Response
+    {
+        return $this->render('virtual_reality/xx.html.twig');
+    }
 }

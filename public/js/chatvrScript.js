@@ -1,6 +1,5 @@
 var hideButton = document.querySelector('.hide');
 var instructions = document.querySelector('.instructions');
-
 hideButton.onclick = function (evt) {
     instructions.classList.toggle('hidden');
     this.textContent = instructions.classList.contains('hidden') ? 'Show': 'Hide';
@@ -50,8 +49,6 @@ if (!roomName) {
     console.log('Room name: '+ roomName);
     console.log('Link Room: '+ window.location + '?' + roomName);
     history.pushState({}, '', window.location + `?${roomName}`);
-    //alert("Link de la reunion: "+ window.location + '?' + roomName)
-    //hideButton.click();
 }
 else {
     hideButton.click();
