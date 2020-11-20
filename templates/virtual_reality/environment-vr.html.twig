@@ -9,7 +9,7 @@
 
 {% endblock %}
 
-{% block title %}Chat-vr{% endblock %}
+{% block title %}Room-vr{% endblock %}
 
 {% block stylesheets %}
 
@@ -17,7 +17,14 @@
 
 {% block body %}
 
-   <a-scene>
+    <form>
+        <div class="form-group">
+            <input type="text" class="form-control" id="message" placeholder="Escribir mensaje...">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+    </form>
+
+    <a-scene>
         <a-assets>
             <a-mixin id="me" visible="false" look-controls wasd-controls share="position, rotation"></a-mixin>
         </a-assets>

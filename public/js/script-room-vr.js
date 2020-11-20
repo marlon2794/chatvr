@@ -1,13 +1,17 @@
 console.log('Conectado...');
-var scene = document.querySelector('a-scene');
-var text = document.querySelector('a-text');
-text.setAttribute('asdasd');
-console.log(text.localName);
-console.log(text.attributes);
-console.log(text.tagName);
-console.log(text.attributes.item(0));
-text.setAttribute('value','hellofriend');
 
+// variable que reconoce el tag a-scene para poder interactuar con el DOM
+var scene = document.querySelector('a-scene');
+
+// variable que reconoce el tag a-text para poder enviar mensajes
+var text = document.querySelector('a-text');
+//console.log(text.localName);
+console.log(text.attributes);
+console.log('tag-name: '+text.tagName);
+//console.log('0: ' + text.attributes.item(0));
+//console.log('2: ' + text.attributes.item(2));
+text.setAttribute('value','Welcome');
+text.setAttribute('color','#000000');
 (function start() {
     if (!scene.hasLoaded) {
         scene.addEventListener('loaded', start);
@@ -18,20 +22,27 @@ text.setAttribute('value','hellofriend');
     var currentUrl = new URL(window.location);
     var roomName = currentUrl.search.substr(1);
 
+    // Asignacion del nombres de la aula virtual
     if (!roomName) {
         roomName = prefix + Date.now();
         currentUrl.search = roomName;
+        console.log('Room name: ' + roomName);
         history.pushState({}, '', currentUrl.href);
     }
 
+    // variable que reconoce el componente sharedspace para poder interactuar con el DOM
+    // y permite que se puedan conmunicar con en un chat normal
     var room = document.querySelector('[sharedspace]');
 
+    // Verificacion de si ha ingresado un nuevo participante
     room.addEventListener('enterparticipant', function (evt) {
         var detail = evt.detail;
+        alert("Un nuevo participante se ha unido a la sala!");
         console.log('Id: ' + detail.id);
         console.log('Position: ' + detail.position);
     });
 
+    // Permite que un avatar pueda ser añadido al DOM
     room.addEventListener('avataradded', function onAdded(evt) {
 
         var avatar = evt.detail.avatar;
@@ -40,6 +51,9 @@ text.setAttribute('value','hellofriend');
             return;
         }
 
+        // Configuración de posición para los avatares(usuarios) que se vayan uniendo a la sala
+        // NOTA: cada que ingresa un participante todos los participantes son ordenados nuevamente, y se vuelve
+        // a calcular las posiciones para que no existan superposiones
         var avatarY = avatar.getAttribute('position').y;
         avatar.object3D.lookAt(new THREE.Vector3(0, avatarY, 0));
 
@@ -63,6 +77,7 @@ text.setAttribute('value','hellofriend');
     ];
     var environment = document.querySelector('[environment]');
 
+    // Funció que permite setear un nuevo preset
     function setEnvironment(preset) {
         environment.setAttribute('environment', { preset: preset });
     }
@@ -80,7 +95,7 @@ text.setAttribute('value','hellofriend');
             setEnvironment(preset);
             room.components.sharedspace.send('*', { type: 'environment', preset: preset});
             room.components.sharedspace.send('*', { type: 'a-text', value: 'Hello Friend'});
-            text.setAttribute('value','cabez mapa');
+            //text.setAttribute('value','cabez mapa');
         }
     });
 
