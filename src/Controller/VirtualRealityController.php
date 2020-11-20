@@ -49,6 +49,17 @@ class VirtualRealityController extends AbstractController
     }
 
     /**
+     * @Route("/sendmssg", name="send_message", methods={"POST"})
+     */
+    public function sendMessage(): Response
+    {
+        $message = $_POST["message"];
+        return $this->render('virtual_reality/prueba.html.twig', [
+            'message' => $message,
+        ]);
+    }
+
+    /**
      * @Route("/xx", name="xx")
      */
     public function xx(): Response
