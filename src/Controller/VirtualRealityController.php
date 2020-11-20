@@ -41,6 +41,14 @@ class VirtualRealityController extends AbstractController
     }
 
     /**
+     * @Route("/environmentvr", name="environmentvr")
+     */
+    public function environmentVr(): Response
+    {
+        return $this->render('virtual_reality/environment-vr.html.twig');
+    }
+
+    /**
      * @Route("/xx", name="xx")
      */
     public function xx(): Response

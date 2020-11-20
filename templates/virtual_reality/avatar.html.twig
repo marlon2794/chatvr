@@ -29,7 +29,12 @@
                     <a-sphere radius="0.1" color="#FFEB3B"></a-sphere>
                     <a-sphere class= "eye1" position="0.05 0.03 -0.08" radius="0.02" segments-width="8" segments-height="8" color="#000000"></a-sphere>
                     <a-sphere class= "eye2" position="-0.05 0.03 -0.08" radius="0.02" segments-width="8" segments-height="8" color="#000000"></a-sphere>
-                    <a-sphere class= "nose" position="0 0.001 -0.08" radius="0.02" segments-width="8" segments-height="8" color="#0000FF"></a-sphere>
+                    <a-cone class="nose" position="-0.006 -0.004 -0.128" rotation="0 90 -90" scale="1 1 0.8"  height="0.06" radius-bottom="0.03" radius-top="0"  color="#000000"></a-cone>
+                    <a-entity class="mouth">
+                        <a-box class="mouth" position="-0.004 -0.046 -0.089" scale="0.05 0.005 0.001" color="#000000"></a-box>
+                        <a-box class="mouth" position="-0.034 -0.040 -0.089" rotation="0 0 -45" scale="0.02 0.005 0.001" color="#000000"></a-box>
+                        <a-box class="mouth" position="0.026 -0.040 -0.089" rotation="0 0 45" scale="0.02 0.005 0.001" color="#000000"></a-box>
+                    </a-entity>>
                 </a-entity>
 
                 <a-cone class="neck" color="tomato" position="0 -0.10 0.001" radius-bottom="0.02" radius-top="0.01" height="0.04"></a-cone>
@@ -49,16 +54,18 @@
                 <a-box class="foot2" position="0.062 -0.682 0" rotation="0 0 0" scale="0.05 0.38 0.05" color="#FF0000"></a-box>
                 <a-sphere class= "foot22" position="0.066 -0.903 0" radius="0.05" color="#FF0000"></a-sphere>
 
+                <a-entity class="hat" position="0.007 0.123 0.100" scale="1 0.5 1">
+                    <a-cylinder class="cup" position="-0.004 0.039 -0.100" color="#000000" height="0.25" radius="0.08"></a-cylinder>
+                    <a-cylinder class="base"  position="-0.004 -0.082 -0.100" color="#000000" height="0.01" radius="0.2"></a-cylinder>
+                </a-entity>
+
                 <a-entity class="tie" position="0 -0.067 0.081" scale="1 0.5 1">
                     <a-sphere class="themable" position="0 -0.07 -0.1" scale="1 1 0.5" segments-width="4" segments-height="4" radius="0.02" color="#000000"></a-sphere>
                     <a-cone class="themable" position="0.03 -0.07 -0.1" rotation="0 0 90" scale="1 1 0.5" segments-radial="8" segments-height="1" height="0.03" radius-bottom="0.03"  color="#000000"></a-cone>
                     <a-cone class="themable" position="-0.03 -0.07 -0.1" rotation="0 0 -90" scale="1 1 0.5" segments-radial="8" segments-height="1" height="0.03" radius-bottom="0.03"  color="#000000"></a-cone>
                 </a-entity>
 
-                <a-entity class="hat" position="0.007 0.123 0.100" scale="1 0.5 1">
-                    <a-cylinder class="cup" position="-0.004 0.039 -0.100" color="#000000" height="0.25" radius="0.08"></a-cylinder>
-                    <a-cylinder class="base"  position="-0.004 -0.082 -0.100" color="#000000" height="0.01" radius="0.2"></a-cylinder>
-                </a-entity>
+
             </a-entity>
 
         </a-entity>
