@@ -4,14 +4,9 @@ console.log('Conectado...');
 var scene = document.querySelector('a-scene');
 
 // variable que reconoce el tag a-text para poder enviar mensajes
-var text = document.querySelector('a-text');
+// var text = document.querySelector('a-text');
 //console.log(text.localName);
-console.log(text.attributes);
-console.log('tag-name: '+text.tagName);
-//console.log('0: ' + text.attributes.item(0));
-//console.log('2: ' + text.attributes.item(2));
-text.setAttribute('value','Welcome');
-text.setAttribute('color','#000000');
+
 (function start() {
     if (!scene.hasLoaded) {
         scene.addEventListener('loaded', start);
@@ -75,12 +70,42 @@ text.setAttribute('color','#000000');
         'poison', 'arches', 'tron', 'japan',
         'dream', 'volcano', 'starry', 'osiris'
     ];
-    var environment = document.querySelector('[environment]');
 
-    // Funció que permite setear un nuevo preset
+    var btsndmssg = document.getElementById('btsndmssg');
+    console.log('Button: '+btsndmssg);
+
+    btsndmssg.addEventListener('click',myFunction);
+    var messages = '';
+    function myFunction() {
+        messages  = document.getElementById("message").value;
+        console.log('Messages: '+ messages);
+        var message = sendMessage();
+        setText(message);
+        room.components.sharedspace.send('*', { type: 'text', value: message});
+    }
+
+
+
+
+    var environment = document.querySelector('[environment]');
+    console.log('Environment: ' + environment.getAttribute('environment').preset);
+
+    // Función que permite setear un nuevo preset
     function setEnvironment(preset) {
+        console.log('setEnvironment');
         environment.setAttribute('environment', { preset: preset });
     }
+
+    var text = document.querySelector('[text]');
+    console.log('Text: ' + text.getAttribute('text').value);
+
+    // Función que permite setear un nuevo preset
+    function setText(message) {
+        console.log('setText');
+        console.log('Messages: '+ messages);
+        text.setAttribute('text', { value: message });
+    }
+
 
     function getNextPreset() {
         var currentPreset = environment.getAttribute('environment').preset;
@@ -89,12 +114,35 @@ text.setAttribute('color','#000000');
         return presets[(index + 1)];
     }
 
+    function sendMessage() {
+        var currentMessage = text.getAttribute('text').value;
+        return currentMessage+messages;
+    }
+
+
+    // console.log(text.attributes);
+    // console.log('tag-name: '+text.tagName);
+    //
+    // btsndmssg.addEventListener("click",sendMessage);
+    //
+    // function sendMessage() {
+    //     var message = document.getElementById('message').value;
+    //     console.log('Message: '+message);
+    //     aux = text.getAttribute('value')+message;
+    //     text.setAttribute('value',aux);
+    //     text.setAttribute('color','#000000');
+    //     var preset = getNextPreset();
+    //     setEnvironment(preset);
+    //     room.components.sharedspace.send('*', { type: 'environment', preset: preset});
+    //     room.components.sharedspace.send('*', { type: 'a-text', value: 'Hello Friend'});
+    //     //text.setAttribute('value','cabez mapa');
+    // }
+
     window.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === 32 /* spacebar */) {
+        if (evt.keyCode === 17 /* Ctrl-left */) {
             var preset = getNextPreset();
             setEnvironment(preset);
             room.components.sharedspace.send('*', { type: 'environment', preset: preset});
-            room.components.sharedspace.send('*', { type: 'a-text', value: 'Hello Friend'});
             //text.setAttribute('value','cabez mapa');
         }
     });
@@ -104,9 +152,12 @@ text.setAttribute('color','#000000');
             var preset = evt.detail.message.preset;
             setEnvironment(preset);
         }
+
+        if (evt.detail.message.type === 'text') {
+            var message = evt.detail.message.value;
+            setText(message);
+        }
     });
-
-
     room.setAttribute('sharedspace', { room: roomName, hold: false });
 
 

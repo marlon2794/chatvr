@@ -17,11 +17,9 @@
 
 {% block body %}
 
-    <form action="/sendmssg" method="POST">
-        <input type="text" class="form-control" id="message" name="message" placeholder="Escribir mensaje...">
-        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
-    </form>
 
+    <input type="text" value="Mensaje" id="message" name="message" placeholder="Escribir mensaje...">
+    <button id="btsndmssg" name="btsndmssg">Enviar</button>
     <a-scene>
         <a-assets>
             <a-mixin id="me" visible="false" look-controls wasd-controls share="position, rotation"></a-mixin>
@@ -30,7 +28,8 @@
             <a-entity environment="preset: goaland">
 
             </a-entity>
-            <a-text value="Hello, World!" position="0 1.5 -3" color="#0000FF"></a-text>
+            <!--<a-text value="Hello, World!" position="0 1.5 -3" color="#0000FF"></a-text>-->
+            <a-entity text="value: World!; color: #0000FF" position="0 1.9 -3"></a-entity>
         </a-entity>
    </a-scene>
     <template>
