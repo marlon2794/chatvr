@@ -73,3 +73,4 @@ link.onclick = function () {
     selection.empty();
     selection.addRange(range);
 };
+

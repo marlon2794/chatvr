@@ -1,3 +1,22 @@
-<h1>
-hello {{ message }}
-</h1>
+{% extends "base.html.twig" %}
+
+{% block title %}Prueba{% endblock %}
+
+{% block libraries %}
+
+{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block headscripts %}{% endblock %}
+
+{% block body %}
+    <a-scene>
+        <a-entity class="whiteboard" text="value: A(say): Hello B \n
+        B(say): Hello A. \n
+        A(say): Hello A. \n
+        B(say): Hello A. \n
+        " material="color: blue" geometry="primitive: plane; width: 4; height: 6" position="0 2 -5"></a-entity>
+    </a-scene>
+    {% block javascripts %}{% endblock %}
+{% endblock %}

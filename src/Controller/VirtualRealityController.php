@@ -60,10 +60,44 @@ class VirtualRealityController extends AbstractController
     }
 
     /**
+     * @Route("/indexvr", name="indexvr")
+     */
+    public function indexVr(): Response
+    {
+        return $this->render('virtual_reality/index-vr.html.twig');
+    }
+
+    /**
+     * @Route("/keyboardvr", name="keyboardvr")
+     */
+    public function keyboardVr(): Response
+    {
+        return $this->render('virtual_reality/keyboard-vr.html.twig');
+    }
+
+    /**
+     * @Route("/guivr", name="guivr")
+     */
+    public function guivr(): Response
+    {
+        return $this->render('virtual_reality/gui.html.twig');
+    }
+
+
+    /**
      * @Route("/xx", name="xx")
      */
     public function xx(): Response
     {
         return $this->render('virtual_reality/xx.html.twig');
+    }
+
+
+    /**
+     * @Route("/prueba", name="prueba")
+     */
+    public function prueba(): Response
+    {
+        return $this->render('virtual_reality/prueba.html.twig');
     }
 }

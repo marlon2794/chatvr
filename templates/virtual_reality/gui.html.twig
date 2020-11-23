@@ -1,0 +1,105 @@
+{% extends "base.html.twig" %}
+
+{% block libraries %}
+
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+    <script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/delapuente/aframe-sharedspace-component/master/dist/aframe-sharedspace-component.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+    <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+
+
+
+{% endblock %}
+
+{% block title %}Chat-vr{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="css/chatvr_style.css"/>
+{% endblock %}
+
+{% block body %}
+
+    <a class="hide" href="#">Hide</a>
+    <section class="instructions">
+        <h1>GUI-VR</h1>
+        <p>Otorgue permiso a este sitio para acceder a su micrófono y compartir el siguiente enlace con sus amigos (o abrirlo en otro navegador / pestaña). Espera a que un amigo se ponga</p>
+        <span class="link"></span>
+        <a class="move" href="/chatvr">Cambiar de sala.</a>
+    </section>
+    <a-scene embedded>
+        <!-- <a-scene embedded fog="type: linear; color: #333; near:5; far:15">  fog añade neblina-->
+        <a-assets>
+            <a-mixin id="foliage" material="color:#849812"></a-mixin>
+
+            <!--Este tag mixim permite utilizar controles de movimiento para los avatares-->
+            <a-mixin id="user" visible="false" look-controls wasd-controls share="position, rotation"></a-mixin>
+
+            <img id="wall" src="images/wall.jpg">
+            <img crossorigin="anonymous" id="floor" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/71c382ff-ba87-45f5-bc5f-272d0b65f1fa/d6z6f7n-d0432750-413e-43dd-9c71-94851bd5de38.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvNzFjMzgyZmYtYmE4Ny00NWY1LWJjNWYtMjcyZDBiNjVmMWZhXC9kNno2ZjduLWQwNDMyNzUwLTQxM2UtNDNkZC05YzcxLTk0ODUxYmQ1ZGUzOC5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.3qCLPuji3P1qeKmTuxrPwKCFCmJKwfig5_1rQOn5l9w">
+            <a-asset-item id="table" src="gltf/Table_01.gltf"></a-asset-item>
+        </a-assets>
+        <a-entity sharedspace="hold: true" avatars="onmyself: user">
+
+            <!-- Room -->
+            <!-- Sky-->
+            <a-box class="sky" position="0 5.5 -2" scale="20 1 20" src="#floor"></a-box>
+
+
+            <a-sky color="#333"></a-sky>
+            <!-- Ground-->
+            <a-plane rotation="-90 0 0" position="0 0 -2" scale="20 20 1" src="#floor" repeat="5 5"></a-plane>
+
+            <!-- Walls-->
+            <a-box class="wall" position="10 2.5 -2" scale="1 5 20" src="#wall" repeat="10 10"></a-box>
+            <a-box class="wall" position="-10 2.5 -2" scale="1 5 20" src="#wall" repeat="10 10"></a-box>
+            <a-box class="wall" position="0 2.5 -6" scale="20 5 1" src="#wall" repeat="10 10"></a-box>
+            <a-box class="wall" position="0 2.5 8" scale="20 5 1" src="#wall"repeat="10 10"></a-box>
+
+{#            <a-gltf-model src="#board" position="0 2 -3" scale="0.5 0.5 0.5"></a-gltf-model>#}
+            <a-entity text="font: https://cdn.aframe.io/fonts/Roboto-msdf.json; value: World!; color: #000000" position="0 1.9 -6"></a-entity>
+            <a-gltf-model class="table" src="#table" position="0 0 -1.5" scale="0.5 0.11 0.2"></a-gltf-model>
+
+        </a-entity>
+
+        <a-gui-flex-container flex-direction="column" justify-content="center" align-items="normal" component-padding="0.1" opacity="0.7" width="3.5" height="4.5" position="2 2.5 -4" rotation="0 0 0">
+{#            <!-- Camera + cursor. -->#}
+{#            <a-entity id="cameraRig" position="0 1.6 0">#}
+{#                <a-camera look-controls wasd-controls position="0 0 0">#}
+{#                    <a-gui-cursor id="cursor" raycaster="objects: [gui-interactable]" fuse="true" fuse-timeout="2000" design="ring">#}
+{#                    </a-gui-cursor> <!-- /cursor -->#}
+{#                </a-camera> <!-- /camera -->#}
+{#            </a-entity>#}
+
+            <a-gui-button
+                    width="2.5" height="0.75"
+                    value="test button"
+                    font-family="Arial"
+                    margin="0 0 0.01 0">
+            </a-gui-button>
+        </a-gui-flex-container>
+
+    </a-scene>
+    <template>
+        <a-entity>
+            <a-sphere radius="0.1" color="#ffffff"></a-sphere>
+            <a-sphere position="0.05 0.03 -0.08" radius="0.02" segments-width="8" segments-height="8" color="#000000"></a-sphere>
+            <a-sphere position="-0.05 0.03 -0.08" radius="0.02" segments-width="8" segments-height="8" color="#000000"></a-sphere>
+            <a-sphere class="themable" position="0 -0.07 -0.1" scale="1 1 0.5" segments-width="4" segments-height="4" radius="0.02" color="#11fd3e"></a-sphere>
+            <a-cone class="themable" position="0.03 -0.07 -0.1" rotation="0 0 90" scale="1 1 0.5" segments-radial="8" segments-height="1" height="0.03" radius-bottom="0.03"  color="#1cff3c"></a-cone>
+            <a-cone class="themable" position="-0.03 -0.07 -0.1" rotation="0 0 -90" scale="1 1 0.5" segments-radial="8" segments-height="1" height="0.03" radius-bottom="0.03"  color="#1cff3c"></a-cone>
+        </a-entity>
+        <!--<a-entity>
+        <a-entity obj-model="obj: url(https://cdn.glitch.com/4e53a88a-96d2-46e5-ab4b-f8f1b9c2d486%2Fface.obj?1506059732633)" rotation="0 180 0" scale="0.01 0.01 0.01"></a-entity>
+
+        Anime Face Model Stocking(https://sketchfab.com/models/d049b6a85d204057b170ef9dbc851200) by stocking(https://sketchfab.com/stocking) is licensed under CC Attribution(http://creativecommons.org/licenses/by/4.0/)
+
+        </a-entity> -->
+    </template>
+
+    {% block javascripts %}
+        <script src="{{ asset('js/script-gui-vr.js') }}"></script>
+    {% endblock %}
+
+{% endblock %}

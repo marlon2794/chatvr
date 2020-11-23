@@ -2,6 +2,7 @@
 
 {% block libraries %}
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
     <script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/delapuente/aframe-sharedspace-component/master/dist/aframe-sharedspace-component.min.js"></script>
@@ -29,7 +30,7 @@
 
             </a-entity>
             <!--<a-text value="Hello, World!" position="0 1.5 -3" color="#0000FF"></a-text>-->
-            <a-entity text="value: World!; color: #0000FF" position="0 1.9 -3"></a-entity>
+            <a-entity text="font: https://cdn.aframe.io/fonts/Roboto-msdf.json; value: World!; color: #0000FF" position="0 1.9 -3"></a-entity>
         </a-entity>
    </a-scene>
     <template>
