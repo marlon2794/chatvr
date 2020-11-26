@@ -1,0 +1,469 @@
+extends "base.html.twig" %}
+
+{% block libraries %}
+
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-sharedspace-component@1.0.1/dist/aframe-sharedspace-component.min.js"></script>
+    <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+
+{% endblock %}
+
+{% block title %} My Networked-Aframe Scene{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block body %}
+    <script>
+        AFRAME.registerComponent('queue', {
+            dependencies: ['position'],
+
+            schema: {
+                position: { default: 1 },
+                separation: { default: 2 }
+            },
+
+            update() {
+                var position = this.el.getAttribute('position');
+                position.z = - (this.data.position - 1) * this.data.separation;
+                this.el.setAttribute('position', position);
+            }
+        });
+    </script>
+    <script>
+        AFRAME.registerComponent('theme', {
+            schema: { type: 'color', default: 'black' },
+
+            update() {
+                var color = this.data;
+                var themable = this.el.querySelectorAll('.themable');
+                themable.forEach(function (el) {
+                    el.setAttribute('color', color);
+                });
+            }
+        });
+    </script>
+    <a-scene>
+        <a-assets>
+            <a-mixin id="me" look-controls wasd-controls share="position, theme"></a-mixin>
+        </a-assets>
+
+        <a-entity
+                sharedspace="hold: true"
+                avatars="placement: queue; onmyself: me"></a-entity>
+
+        <a-gui-flex-container
+                flex-direction="row" justify-content="center" align-items="normal"
+                component-padding="0.1" opacity="0.7" width="6" height="0.6"
+                position="0 2.8 -4" rotation="0 0 0"
+        >
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="Q"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="W"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="E"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="R"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="T"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="Y"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="U"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="I"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="O"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="P"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+        </a-gui-flex-container>
+
+        <a-gui-flex-container
+                flex-direction="row" justify-content="center" align-items="normal"
+                component-padding="0.1" opacity="0.7" width="6" height="0.6"
+                position="0 2.2 -4" rotation="0 0 0"
+        >
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="A"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="S"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="D"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="F"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="G"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="H"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="J"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="K"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="L"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+        </a-gui-flex-container>
+
+        <a-gui-flex-container
+                flex-direction="row" justify-content="center" align-items="normal"
+                component-padding="0.1" opacity="0.7" width="6" height="0.6"
+                position="0 1.6 -4" rotation="0 0 0"
+        >
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="Z"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="X"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="C"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="V"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="B"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="N"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="M"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="K"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="L"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+        </a-gui-flex-container>
+
+
+
+
+        </a-gui-flex-container>
+
+        <a-gui-flex-container
+                flex-direction="row" justify-content="center" align-items="normal"
+                component-padding="0.1" opacity="0.7" width="6" height="0.6"
+                position="0 1 -4" rotation="0 0 0"
+        >
+            <a-gui-button
+                    width="0.5" height="0.5"
+                    onclick="buttonActionFunction" key-code=""
+                    value="L"
+                    font-family="Arial"
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-button>
+
+        </a-gui-flex-container>
+
+        <!-- Camera + cursor. -->
+        <a-entity id="cameraRig" position="0 1.6 0">
+            <a-camera look-controls wasd-controls position="0 0 0">
+                <a-gui-cursor id="cursor"
+                              raycaster="objects: [gui-interactable]"
+                              fuse="false"
+                >
+                </a-gui-cursor> <!-- /cursor -->
+            </a-camera> <!-- /camera -->
+        </a-entity>
+
+    </a-scene>
+
+    <template>
+        <a-entity theme position-around>
+            <!-- Head -->
+            <a-cone class="cabeza"
+                    position="0 0.23 0"
+                    radius-bottom="0.075" radius-top="0" height="0.15"
+                    segments-height="1" segments-radial="8"
+                    color="#000000">
+            </a-cone>
+
+            <!-- Body -->
+            <a-cylinder class="cuerpo"
+                        rotation="90 0 0"
+                        radius="0.15" height="0.075"
+                        segments-height="1" segments-radial="5"
+                        color="#000000">
+            </a-cylinder>
+
+        </a-entity>
+    </template>
+
+    <script>
+        var detail='';
+        var room = document.querySelector('[sharedspace]');
+        room.addEventListener('enterparticipant', function (evt) {
+            //var detail = evt.detail;
+            detail =evt.detail;
+            console.log('-------------------------------------------------------------');
+            console.log("isConnected(): "+room.components.sharedspace.isConnected());
+            console.log('Un nuevo participante se ha unido a la sala');
+            console.log("Id participant: "+detail.id + ' - position: ' + detail.position);
+            console.log('-------------------------------------------------------------');
+        });
+
+        // Configuracion para cuando se agrega un nuevo avatar
+        room.addEventListener('avataradded', function onAdded(evt) {
+            var avatar = evt.detail.avatar;
+            console.log("Id participant: "+detail.id + ' - position: ' + detail.position);
+            //console.log('Avatar params: ' + JSON.stringify(avatar.attributes))
+            console.log('Avatar attributes: ');
+            console.log(avatar.attributes);
+            console.log('Position: ');
+            console.log(avatar.getAttribute('position'));
+            console.log('Camera: ');
+            console.log(avatar.getAttribute('camera'));
+            //Esto permite hacer algo con la camara q no se que ajajaja
+            avatar.setAttribute('camera','false');
+            //console.log(avatar.getAttribute('camera'));
+            if (!avatar.hasLoaded) {
+                avatar.addEventListener('loaded', onAdded.bind(null, evt));
+                return;
+            }
+
+            var center = { x: 0, z: 0 };
+            var avatarY = avatar.getAttribute('position').y;
+            console.log('Avatar current position: '
+                +center.x+', '
+                +avatarY+', '
+                +center.z);
+            avatar.object3D.lookAt(new THREE.Vector3(
+                center.x, avatarY, center.z
+            ));
+
+            var radToDeg = THREE.Math.radToDeg;
+            var rotation = avatar.object3D.rotation;
+            rotation.y += Math.PI;
+            avatar.setAttribute('rotation', {
+                x: radToDeg(rotation.x),
+                y: radToDeg(rotation.y),
+                z: radToDeg(rotation.z)
+            });
+            console.log('Avatar new position: '
+                +avatar.getAttribute('position').x+' '
+                +avatar.getAttribute('position').y+' '
+                +avatar.getAttribute('position').z);
+
+            console.log('Avatar rotation: '
+                +avatar.getAttribute('rotation').x+' '
+                +avatar.getAttribute('rotation').y+' '
+                +avatar.getAttribute('rotation').z);
+        });
+
+        room.addEventListener('exitparticipant', function (evt) {
+            var detail = evt.detail;
+            console.log("isConnected(): "+room.components.sharedspace.isConnected());
+            console.log('Un participante se ha desconectado de la sala');
+            console.log("Id participant: "+detail.id + ' - position: ' + detail.position);
+        });
+
+        var roomName = window.location.search.substr(1);
+        if (!roomName) {
+            roomName = Date.now() + '';
+            console.log('Room name: '+window.location + '?' + roomName);
+            history.pushState({}, '', window.location + '?' + roomName);
+        }
+        connect();
+
+        function connect() {
+            var scene = document.querySelector('a-scene');
+            var allObjects= document.querySelector('*');
+            for (var i = 0; i < allObjects.length; i++) {
+                console.log('Element: '+allObjects[i]);
+            }
+            if (!scene.hasLoaded) {
+                scene.addEventListener('loaded', connect);
+                return;
+            }
+            room.setAttribute('sharedspace', { room: roomName, hold: false });
+        }
+
+
+        window.buttonActionFunction = function () {
+            console.log("clicked GUI");
+            console.log(detail);
+            var buttons = document.querySelectorAll('a-gui-button');
+            console.log(buttons);
+        }
+    </script>
+
+    {% block javascripts %}
+    {% endblock %}
+
+{% endblock %}

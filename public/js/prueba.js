@@ -1,7 +1,14 @@
-//alert('Loading script-room-vr...');
-
 // variable que reconoce el tag a-scene para poder interactuar con el DOM
 var scene = document.querySelector('a-scene');
+
+var button = document.querySelector('a-ui-button');
+// console.log('Atributtes: '+button.getAttribute('text-value'));
+button.addEventListener('click',click);
+function click(){
+    console.log('Atributtes: '+button.getAttribute('text-value'));
+}
+
+
 
 // variable que reconoce el tag a-text para poder enviar mensajes
 // var text = document.querySelector('a-text');
@@ -84,10 +91,9 @@ var scene = document.querySelector('a-scene');
         room.components.sharedspace.send('*', { type: 'text', value: message});
     }
 
-
-
-
+    // Seleccionamos el environment tag para poder modificarlo
     var environment = document.querySelector('[environment]');
+
     console.log('Environment: ' + environment.getAttribute('environment').preset);
 
     // Función que permite setear un nuevo preset
@@ -96,6 +102,7 @@ var scene = document.querySelector('a-scene');
         environment.setAttribute('environment', { preset: preset });
     }
 
+    // Seleccionamos el text tag para poder modificarlo
     var text = document.querySelector('[text]');
     console.log('Text: ' + text.getAttribute('text').value);
 
@@ -119,24 +126,6 @@ var scene = document.querySelector('a-scene');
         return currentMessage+messages;
     }
 
-
-    // console.log(text.attributes);
-    // console.log('tag-name: '+text.tagName);
-    //
-    // btsndmssg.addEventListener("click",sendMessage);
-    //
-    // function sendMessage() {
-    //     var message = document.getElementById('message').value;
-    //     console.log('Message: '+message);
-    //     aux = text.getAttribute('value')+message;
-    //     text.setAttribute('value',aux);
-    //     text.setAttribute('color','#000000');
-    //     var preset = getNextPreset();
-    //     setEnvironment(preset);
-    //     room.components.sharedspace.send('*', { type: 'environment', preset: preset});
-    //     room.components.sharedspace.send('*', { type: 'a-text', value: 'Hello Friend'});
-    //     //text.setAttribute('value','cabez mapa');
-    // }
 
     window.addEventListener('keydown', function (evt) {
         if (evt.keyCode === 17 /* Ctrl-left */) {

@@ -1,19 +1,23 @@
 {% extends "base.html.twig" %}
 
-{% block title %}A-Frame GUI Keyboard{% endblock %}
-
 {% block libraries %}
 
-{#    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>#}
-    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    {#    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>#}
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-sharedspace-component@1.0.1/dist/aframe-sharedspace-component.min.js"></script>
     <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
     <script src="https://unpkg.com/aframe-html-shader@0.2.0/dist/aframe-html-shader.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
 
 {% endblock %}
 
-{% block stylesheets %}
+{% block title %}Chat-vr{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="css/chatvr_style.css"/>
+
+    {#    Estilo de fuente para las letras del teclado#}
     <style type="text/css">
         @font-face{
             font-family:"Ionicons";
@@ -37,36 +41,122 @@
             position: absolute !important;
         }
     </style>
-
 {% endblock %}
 
 {% block headscripts %}
 
-{#    <script src="js/aframe-gui.js"></script>#}
+    {#  Configuraciones del teclado (scripts externos (yo no hice))#}
     <script src="js/fontfaceobserver.js"></script>
     <script src="js/keyboard-gui.js"></script>
     <script src="js/gui-env.js"></script>
 
+
+    {#    Compartir el componente 'queue'; sirve para compartir la posición de cada usuario#}
+    <script>
+        AFRAME.registerComponent('queue', {
+            dependencies: ['position'],
+
+            schema: {
+                position: { default: 1 },
+                separation: { default: 2 }
+            },
+
+            // Actualización de la posición del usuario
+            update() {
+                var position = this.el.getAttribute('position');
+                position.z = - (this.data.position - 1) * this.data.separation;
+                console.log('Position ');
+                console.log(position);
+                this.el.setAttribute('position', position);
+            }
+        });
+    </script>
+    <script>
+        {# Compartir un componente llamando theme (de esta manera se puede compartir otras cosas) #}
+        AFRAME.registerComponent('theme', {
+            schema: { type: 'color', default: 'black' },
+
+            update() {
+                var color = this.data;
+                var themable = this.el.querySelectorAll('.themable');
+                themable.forEach(function (el) {
+                    el.setAttribute('color', color);
+                });
+            }
+        });
+    </script>
+
 {% endblock %}
+
+
 
 {% block body %}
 
 
-    <a-scene gui-env>
-
+    <a class="hide" href="#">Hide</a>
+    <section class="instructions">
+        <h1>Chat-VR</h1>
+        <p>Link de la sala</p>
+        <span class="link"></span>
+        <a class="move" href="./">Cambiar de sala.</a>
+    </section>
+    <a-scene>
         <a-assets>
+            <a-mixin id="me" look-controls wasd-controls share="position, theme"></a-mixin>
+
+            <img id="wall">
+            <img id="floor">
+            {#            <img id="wall" src="images/wall_1.jpg">#}
+
+            {#            <img crossorigin="anonymous" id="floor" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/71c382ff-ba87-45f5-bc5f-272d0b65f1fa/d6z6f7n-d0432750-413e-43dd-9c71-94851bd5de38.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvNzFjMzgyZmYtYmE4Ny00NWY1LWJjNWYtMjcyZDBiNjVmMWZhXC9kNno2ZjduLWQwNDMyNzUwLTQxM2UtNDNkZC05YzcxLTk0ODUxYmQ1ZGUzOC5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.3qCLPuji3P1qeKmTuxrPwKCFCmJKwfig5_1rQOn5l9w">#}
+
+            <!-- Add asset here -->
+            <a-asset-item id="table" src="gltf/Table_01.gltf"></a-asset-item>
+            <a-asset-item id="chair" src="gltf/chair.gltf"></a-asset-item>
+            <a-asset-item id="board" src="gltf/WhiteBoard_01.gltf"></a-asset-item>
+            <a-asset-item id="avatar" src="gltf/avatar.gltf"></a-asset-item>
+
+
             <!-- Text Canvas -->
             <canvas id="canvasObj" crossorigin="anonymous" webkit-playsinline=""></canvas>
             <a-asset-item id="iconfont" src="fonts/ionicons.ttf"></a-asset-item>
-
         </a-assets>
 
+        <a-entity
+                sharedspace="audio: true; hold: true"
+                avatars="placement: queue; onmyself: me">
+            <a-entity environment="preset: egypt">
+
+            </a-entity>
+            <!-- Room -->
+            <!-- Sky-->
+            {#            <a-box class="sky" position="0 10 0" scale="20 0.5 20" src="#floor" repeat="10 10" ></a-box>#}
+
+            {#            <a-sky color="#333"></a-sky>#}
+            <!-- Ground-->
+            {#            <a-plane rotation="-90 0 0" width="25" height="25" src="#floor" repeat="10 10"></a-plane>#}
+
+            <!-- Walls-->
+            {#            <a-box class="wall1" position="10 5 0" scale="1 10 20" src="#wall" repeat="10 10"></a-box>#}
+            {#            <a-box class="wall2" position="-10 5 0" scale="1 10 20" src="#wall" repeat="10 10"></a-box>#}
+            {#            <a-box class="wall3" position="0 5 10" scale="20 10 1" src="#wall" repeat="10 10"></a-box>#}
+            {#            <a-box class="wall4" position="0 5 -10" scale="20 10 1" src="#wall" repeat="10 10"></a-box>#}
+            <a-entity text="font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: Whiteboard, \n 1!; left: center; baseline: center" material="color: #515A5A" geometry="primitive: plane; width: 8; height: 7" position="-4.15 5 -9.4"></a-entity>
+
+
+            {#            <a-entity text="value: World!; color: #0000FF" position="3 1.9 -3"></a-entity>#}
+            <!-- Add entity here: -->
+            <a-box class="table" position="0 0 -1.5" scale="0.5 0.11 0.2"></a-box>
+        </a-entity>
+
+
+        {#  GUI teclado#}
         <!-- <a-entity geometry="primitive: box; width:5; height:2; depth:0.01;" position="0 3 -4" material="shader: html; target: #htmlElement; fps:1;"></a-entity> -->
         <a-gui-flex-container
                 id="flex"
                 flex-direction="column" justify-content="center" align-items="middle" component-padding="0.1"
                 opacity="0.7" width="4.5" height="1.8"
-                position="0 3 -4" rotation="0 0 0"
+                position="0 4 -4" rotation="0 0 0"
         >		<a-gui-input id="test_input"
                               width="4" height="0.7"
                               value="Starting value"
@@ -82,7 +172,7 @@
             </a-gui-input>
         </a-gui-flex-container>
 
-        <a-entity position="0 0.75 -4" rotation="-15 0 0">
+        <a-entity position="0 2 -4" rotation="-15 0 0">
             <a-entity id="keyboardNum" visible="false" position="0 -10 -1">
                 <a-entity 	gui-item="type: flex-container; width: 5.25; height: 0.5;"
                              gui-flex-container="flexDirection: row; justifyContent: center; alignItems: normal; componentPadding: 0.1; opacity: 0.7"
@@ -625,6 +715,7 @@
             </a-entity>
         </a-entity>
 
+
         <!-- Camera + cursor. -->
         <a-entity id="cameraRig" position="0 1.6 0">
             <a-camera look-controls wasd-controls position="0 0 0">
@@ -636,15 +727,235 @@
             </a-camera> <!-- /camera -->
         </a-entity>
 
-
         <div style="width: 100%; height: 100%; position: fixed; left: 0; top: 0; z-index: -1; overflow: hidden">
             <div id="htmlElement" style="background: #fff; color:#000; font-size: 60px; width:1500px; height: 600px;"></div>
         </div>
-
     </a-scene>
+
+    <template>
+        <a-entity theme position-around>
+            <a-sphere radius="0.1" color="#ffffff"></a-sphere>
+            <a-sphere position="0.05 0.03 -0.08" radius="0.02" segments-width="8" segments-height="8" color="#000000"></a-sphere>
+            <a-sphere position="-0.05 0.03 -0.08" radius="0.02" segments-width="8" segments-height="8" color="#000000"></a-sphere>
+            <a-sphere class="themable" position="0 -0.07 -0.1" scale="1 1 0.5" segments-width="4" segments-height="4" radius="0.02" color="#11fd3e"></a-sphere>
+            <a-cone class="themable" position="0.03 -0.07 -0.1" rotation="0 0 90" scale="1 1 0.5" segments-radial="8" segments-height="1" height="0.03" radius-bottom="0.03"  color="#1cff3c"></a-cone>
+            <a-cone class="themable" position="-0.03 -0.07 -0.1" rotation="0 0 -90" scale="1 1 0.5" segments-radial="8" segments-height="1" height="0.03" radius-bottom="0.03"  color="#1cff3c"></a-cone>
+        </a-entity>
+    </template>
+
+
 
     {% block javascripts %}
 
+        <script>
+            var hideButton = document.querySelector('.hide');
+            var instructions = document.querySelector('.instructions');
+            hideButton.onclick = function (evt) {
+                instructions.classList.toggle('hidden');
+                this.textContent = instructions.classList.contains('hidden') ? 'Show': 'Hide';
+                return false;
+            };
+
+            var detail='';
+            var room = document.querySelector('[sharedspace]');
+            room.addEventListener('enterparticipant', function (evt) {
+                //var detail = evt.detail;
+                detail =evt.detail;
+                console.log('-------------------------------------------------------------');
+                console.log("isConnected(): "+room.components.sharedspace.isConnected());
+                console.log('Un nuevo participante se ha unido a la sala');
+                console.log("Id participant: "+detail.id + ' - position: ' + detail.position);
+                console.log('-------------------------------------------------------------');
+            });
+
+            // Configuracion para cuando se agrega un nuevo avatar
+            room.addEventListener('avataradded', function onAdded(evt) {
+                var avatar = evt.detail.avatar;
+                console.log("Id participant: "+detail.id + ' - position: ' + detail.position);
+                //console.log('Avatar params: ' + JSON.stringify(avatar.attributes))
+                console.log('Avatar attributes: ');
+                console.log(avatar.attributes);
+                console.log('Position: ');
+                console.log(avatar.getAttribute('position'));
+                console.log('Camera: ');
+                console.log(avatar.getAttribute('camera'));
+                //Esto permite hacer algo con la camara q no se que ajajaja
+                avatar.setAttribute('camera','false');
+                //console.log(avatar.getAttribute('camera'));
+                if (!avatar.hasLoaded) {
+                    avatar.addEventListener('loaded', onAdded.bind(null, evt));
+                    return;
+                }
+
+                var center = { x: 0, z: 0 };
+                var avatarY = avatar.getAttribute('position').y;
+                console.log('Avatar current position: '
+                    +center.x+', '
+                    +avatarY+', '
+                    +center.z);
+                avatar.object3D.lookAt(new THREE.Vector3(
+                    center.x, avatarY, center.z
+                ));
+
+                var radToDeg = THREE.Math.radToDeg;
+                var rotation = avatar.object3D.rotation;
+                rotation.y += Math.PI;
+                avatar.setAttribute('rotation', {
+                    x: radToDeg(rotation.x),
+                    y: radToDeg(rotation.y),
+                    z: radToDeg(rotation.z)
+                });
+                console.log('Avatar new position: '
+                    +avatar.getAttribute('position').x+' '
+                    +avatar.getAttribute('position').y+' '
+                    +avatar.getAttribute('position').z);
+
+                console.log('Avatar rotation: '
+                    +avatar.getAttribute('rotation').x+' '
+                    +avatar.getAttribute('rotation').y+' '
+                    +avatar.getAttribute('rotation').z);
+            });
+
+            room.addEventListener('exitparticipant', function (evt) {
+                var detail = evt.detail;
+                console.log("isConnected(): "+room.components.sharedspace.isConnected());
+                console.log('Un participante se ha desconectado de la sala');
+                console.log("Id participant: "+detail.id + ' - position: ' + detail.position);
+            });
+
+            var roomName = window.location.search.substr(1);
+            if (!roomName) {
+                roomName = Date.now() + '';
+                console.log('Room name: '+window.location + '?' + roomName);
+                history.pushState({}, '', window.location + '?' + roomName);
+            }
+            connect();
+
+            function connect() {
+                var scene = document.querySelector('a-scene');
+                var allObjects= document.querySelector('*');
+                for (var i = 0; i < allObjects.length; i++) {
+                    console.log('Element: '+allObjects[i]);
+                }
+                if (!scene.hasLoaded) {
+                    scene.addEventListener('loaded', connect);
+                    return;
+                }
+
+
+                var presets = [
+                    'contact', 'egypt', 'checkerboard', 'forest',
+                    'goaland', 'yavapai', 'goldmine', 'threetowers',
+                    'poison', 'arches', 'tron', 'japan',
+                    'dream', 'volcano', 'starry', 'osiris'
+                ];
+
+                var environment = document.querySelector('[environment]');
+                console.log('Environment: ' + environment.getAttribute('environment').preset);
+
+                // Función que permite setear un nuevo preset
+                function setEnvironment(preset) {
+                    console.log('setEnvironment');
+                    environment.setAttribute('environment', { preset: preset });
+                }
+
+
+                function getNextPreset() {
+                    var currentPreset = environment.getAttribute('environment').preset;
+                    var index = presets.indexOf(currentPreset);
+                    console.log(presets[(index + 1)]);
+                    return presets[(index + 1)];
+                }
+
+                window.addEventListener('keydown', function (evt) {
+                    if (evt.keyCode === 17 /* Ctrl-left */) {
+                        var preset = getNextPreset();
+                        setEnvironment(preset);
+                        room.components.sharedspace.send('*', { type: 'environment', preset: preset});
+                        //text.setAttribute('value','cabez mapa');
+                    }
+                });
+
+                var text = document.querySelector('[text]');
+                console.log('Text: ' + text.getAttribute('text').value);
+
+                // Función que permite setear un nuevo preset
+                function setText(message) {
+                    console.log('setText');
+                    text.setAttribute('text', { value: message });
+                }
+
+                function sendMessage() {
+                    var currentMessage = text.getAttribute('text').value;
+                    return currentMessage;
+                }
+
+
+                window.enter = function() {
+                    var textField = document.getElementById("test_input");
+                    //textField.value=globalMessage;
+                    console.log('tag-name: '+textField.tagName);
+                    console.log('value: '+textField.value);
+                    //console.log('position: '+textField.position);
+                    var text = document.querySelector('a-gui-input ');
+                    //console.log("width: "+text.getAttribute('width'));
+                    //console.log("height: "+text.getAttribute('height'));
+                    console.log("Mensaje: "+globalMessage);
+                    var gmssgl = globalMessage.length;
+                    console.log("Length: "+gmssgl);
+                    console.log("test input Attributes: "+textField.getAttributeNames());
+
+                    var message = sendMessage()+globalMessage;
+                    setText(message);
+                    room.components.sharedspace.send('*', { type: 'text', value: message});
+
+
+                    for (var i = (gmssgl-1); i >= 0; i--) {
+                        console.log(i+" " + globalMessage[i]);
+                        textField.components["gui-input"].delete();
+                    }
+                    console.log('Enviando Mensaje...');
+                    globalMessage="";
+                    textField.value = globalMessage;
+                    console.log('value: '+textField.value);
+                    console.log("enter");
+                }
+
+                room.addEventListener('participantmessage', function (evt) {
+                    if (evt.detail.message.type === 'environment') {
+                        var preset = evt.detail.message.preset;
+                        setEnvironment(preset);
+                    }
+
+                    if (evt.detail.message.type === 'text') {
+                        var message = evt.detail.message.value + globalMessage;
+                        setText(message);
+                    }
+                });
+                room.setAttribute('sharedspace', { room: roomName, hold: false });
+            }
+
+
+            // window.buttonActionFunction = function () {
+            //     console.log("clicked GUI");
+            //     console.log(detail);
+            //     var buttons = document.querySelectorAll('a-gui-button');
+            //     console.log(buttons);
+            // }
+
+
+            // Select link on click.
+            var link = document.querySelector('.link');
+            link.textContent = window.location.href;
+            link.onclick = function () {
+                var range = document.createRange();
+                range.selectNode(link);
+                var selection = document.getSelection();
+                selection.empty();
+                selection.addRange(range);
+            };
+        </script>
         <script src="js/key-press.js"></script>
     {% endblock %}
+
 {% endblock %}

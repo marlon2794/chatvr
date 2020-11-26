@@ -85,6 +85,14 @@ class VirtualRealityController extends AbstractController
 
 
     /**
+     * @Route("/chatvrgui", name="chatvrgui")
+     */
+    public function chatVrGui(): Response
+    {
+        return $this->render('virtual_reality/chat-vr-gui.html.twig');
+    }
+
+    /**
      * @Route("/xx", name="xx")
      */
     public function xx(): Response

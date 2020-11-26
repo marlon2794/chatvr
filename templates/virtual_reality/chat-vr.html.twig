@@ -4,10 +4,15 @@
 
     <!--A-Frame shared-space component Library-->
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+{#    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script> pierden la movilidad#}
     <script src="https://unpkg.com/aframe-sharedspace-component@1.0.1/dist/aframe-sharedspace-component.min.js"></script>
 
     <!--A-Frame Low Poly Library-->
     <script src="https://cdn.jsdelivr.net/gh/alvinwan/aframe-low-poly@0.0.5/dist/aframe-low-poly.min.js"></script>
+
+    <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+    <script src="https://unpkg.com/aframe-html-shader@0.2.0/dist/aframe-html-shader.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
 
 
 {% endblock %}
@@ -16,7 +21,36 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="css/chatvr_style.css"/>
+    <style type="text/css">
+        @font-face{
+            font-family:"Ionicons";
+
+            src:url("fonts/ionicons.eot?v=2.0.1");
+            src:url("fonts/ionicons.eot?v=2.0.1#iefix") format("embedded-opentype"), url("fonts/ionicons.ttf?v=2.0.1") format("truetype"), url("fonts/ionicons.woff?v=2.0.1") format("woff"), url("fonts/ionicons.svg?v=2.0.1#Ionicons") format("svg");
+
+            font-weight:normal;
+            font-style:normal
+        }
+        body{font-family:Ionicons;}
+        .visuallyhidden {
+            display: block;
+            border: 0;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            width: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            position: absolute !important;
+        }
+    </style>
 {% endblock %}
+
+
+{% block headscripts %}
+
+{% endblock %}
+
 
 {% block body %}
 
@@ -30,13 +64,19 @@
     <a-scene embedded>
         <a-assets>
             <a-mixin id="user" visible="false" look-controls wasd-controls share="position, rotation"></a-mixin>
+{#            <a-mixin id="user"></a-mixin>#}
 
-            <img id="wall" src="images/wall.jpg">
+            <img id="wall">
+{#            <img id="wall" src="images/wall.jpg">#}
             <img crossorigin="anonymous" id="floor" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/71c382ff-ba87-45f5-bc5f-272d0b65f1fa/d6z6f7n-d0432750-413e-43dd-9c71-94851bd5de38.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvNzFjMzgyZmYtYmE4Ny00NWY1LWJjNWYtMjcyZDBiNjVmMWZhXC9kNno2ZjduLWQwNDMyNzUwLTQxM2UtNDNkZC05YzcxLTk0ODUxYmQ1ZGUzOC5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.3qCLPuji3P1qeKmTuxrPwKCFCmJKwfig5_1rQOn5l9w">
             <!-- Add asset here -->
             <a-asset-item id="table" src="gltf/Table_01.gltf"></a-asset-item>
             <a-asset-item id="chair" src="gltf/chair.gltf"></a-asset-item>
             <a-asset-item id="board" src="gltf/WhiteBoard_01.gltf"></a-asset-item>
+
+            <!-- Text Canvas -->
+            <canvas id="canvasObj" crossorigin="anonymous" webkit-playsinline=""></canvas>
+            <a-asset-item id="iconfont" src="fonts/ionicons.ttf"></a-asset-item>
 
         </a-assets>
         <a-entity sharedspace="hold: true" avatars="onmyself: user">
@@ -56,30 +96,43 @@
             <a-box class="wall4" position="0 5 -10" scale="20 10 1" src="#wall" repeat="10 10"></a-box>
 
             <!-- Pizarron -->
-            <a-entity class="whiteboard1" text="font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: Whiteboard, \n 1!; align: center; baseline: center" material="color: #515A5A" geometry="primitive: plane; width: 8; height: 7" position="4.15 5 -9.4"></a-entity>
-            <a-entity class="whiteboard2" text="font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: Whiteboard, \n 2!; align: center; baseline: center" material="color: #515A5A" geometry="primitive: plane; width: 8; height: 7" position="-4.15 5 -9.4"></a-entity>
+{#            <a-entity class="whiteboard1" text="font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: Whiteboard, \n 1!; align: center; baseline: center" material="color: #515A5A" geometry="primitive: plane; width: 8; height: 7" position="4.15 5 -9.4"></a-entity>#}
+            <a-entity text="font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: Whiteboard, \n 1!; left: center; baseline: center" material="color: #515A5A" geometry="primitive: plane; width: 8; height: 7" position="-4.15 5 -9.4"></a-entity>
 
 
             <!-- Add entity here: -->
-            <a-gltf-model class="table" src="#table" position="0 0 -1.5" scale="0.5 0.11 0.2"></a-gltf-model>
-            <a-gltf-model class="chair1" src="#chair" position="2.8 0 -2.75" scale="1 1 1" rotation="0 0 0"></a-gltf-model>
-            <a-gltf-model class="chair2" src="#chair" position="0 0 -2.75" scale="1 1 1" rotation="0 0 0"></a-gltf-model>
-            <a-gltf-model class="chair3" src="#chair" position="-2.8 0 -2.75" scale="1 1 1" rotation="0 0 0"></a-gltf-model>
+{#            <a-gltf-model class="table" src="#table" position="0 0 -1.5" scale="0.5 0.11 0.2"></a-gltf-model>#}
+            <a-box class="table" position="0 0 -1.5" scale="0.5 0.11 0.2"></a-box>
+{#            <a-gltf-model class="chair1" src="#chair" position="2.8 0 -2.75" scale="1 1 1" rotation="0 0 0"></a-gltf-model>#}
+{#            <a-gltf-model class="chair2" src="#chair" position="0 0 -2.75" scale="1 1 1" rotation="0 0 0"></a-gltf-model>#}
+{#            <a-gltf-model class="chair3" src="#chair" position="-2.8 0 -2.75" scale="1 1 1" rotation="0 0 0"></a-gltf-model>#}
 
-            <a-gltf-model class="chair4" src="#chair" position="2.8 0 -0.25" scale="1 1 1" rotation="0 180 0"></a-gltf-model>
-            <a-gltf-model class="chair5" src="#chair" position="0 0 -0.25" scale="1 1 1" rotation="0 180 0"></a-gltf-model>
-            <a-gltf-model class="chair6" src="#chair" position="-2.8 0 -0.25" scale="1 1 1" rotation="0 180 0"></a-gltf-model>
+{#            <a-gltf-model class="chair4" src="#chair" position="2.8 0 -0.25" scale="1 1 1" rotation="0 180 0"></a-gltf-model>#}
+{#            <a-gltf-model class="chair5" src="#chair" position="0 0 -0.25" scale="1 1 1" rotation="0 180 0"></a-gltf-model>#}
+{#            <a-gltf-model class="chair6" src="#chair" position="-2.8 0 -0.25" scale="1 1 1" rotation="0 180 0"></a-gltf-model>#}
 
-            <a-gltf-model class="chair7" src="#chair" position="4.85 0 -2.75" scale="1 1 1" rotation="0 315 0"></a-gltf-model>
-            <a-gltf-model class="chair8" src="#chair" position="-4.85 0 -2.15" scale="1 1 1" rotation="0 45 0"></a-gltf-model>
+{#            <a-gltf-model class="chair7" src="#chair" position="4.85 0 -2.75" scale="1 1 1" rotation="0 315 0"></a-gltf-model>#}
+{#            <a-gltf-model class="chair8" src="#chair" position="-4.85 0 -2.15" scale="1 1 1" rotation="0 45 0"></a-gltf-model>#}
 
-            <a-gltf-model class="chair9" src="#chair" position="5 0 -0.88" scale="1 1 1" rotation="0 215 0"></a-gltf-model>
-            <a-gltf-model class="chair10" src="#chair" position="-5 0 -0.88" scale="1 1 1" rotation="0 135 0"></a-gltf-model>
+{#            <a-gltf-model class="chair9" src="#chair" position="5 0 -0.88" scale="1 1 1" rotation="0 215 0"></a-gltf-model>#}
+{#            <a-gltf-model class="chair10" src="#chair" position="-5 0 -0.88" scale="1 1 1" rotation="0 135 0"></a-gltf-model>#}
 
-            <a-gltf-model src="#fox" position="0 2 -4" scale="0.5 0.5 0.5"></a-gltf-model>
+{#            <a-gltf-model src="#fox" position="0 2 -4" scale="0.5 0.5 0.5"></a-gltf-model>#}
+
+            <a-entity id="cameraRig" position="0 1.6 0">
+                <a-camera look-controls wasd-controls position="0 0 0">
+                    <a-gui-cursor id="cursor"
+                                  raycaster="objects: [gui-interactable]"
+                                  fuse="false"
+                    >
+                    </a-gui-cursor> <!-- /cursor -->
+                </a-camera> <!-- /camera -->
+            </a-entity>
 
         </a-entity>
+
     </a-scene>
+
     <template>
         <a-entity>
           <a-sphere radius="0.1" color="#ffffff"></a-sphere>
@@ -98,7 +151,7 @@
     </template>
 
     {% block javascripts %}
-        <script src="{{ asset('js/script-chat-vr-.js') }}"></script>
+        <script src="js/script-chat-vr-.js"></script>
     {% endblock %}
 
 {% endblock %}

@@ -2,14 +2,13 @@
 
 {% block libraries %}
 
-    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+{#    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>#}
+  s  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
     <script src="https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/delapuente/aframe-sharedspace-component/master/dist/aframe-sharedspace-component.min.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
-
-
 
 {% endblock %}
 
@@ -28,7 +27,7 @@
         <span class="link"></span>
         <a class="move" href="/chatvr">Cambiar de sala.</a>
     </section>
-    <a-scene embedded>
+    <a-scene gui-env>
         <!-- <a-scene embedded fog="type: linear; color: #333; near:5; far:15">  fog añade neblina-->
         <a-assets>
             <a-mixin id="foliage" material="color:#849812"></a-mixin>
@@ -36,7 +35,7 @@
             <!--Este tag mixim permite utilizar controles de movimiento para los avatares-->
             <a-mixin id="user" visible="false" look-controls wasd-controls share="position, rotation"></a-mixin>
 
-            <img id="wall" src="images/wall.jpg">
+{#            <img id="wall" src="images/wall.jpg">#}
             <img crossorigin="anonymous" id="floor" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/71c382ff-ba87-45f5-bc5f-272d0b65f1fa/d6z6f7n-d0432750-413e-43dd-9c71-94851bd5de38.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvNzFjMzgyZmYtYmE4Ny00NWY1LWJjNWYtMjcyZDBiNjVmMWZhXC9kNno2ZjduLWQwNDMyNzUwLTQxM2UtNDNkZC05YzcxLTk0ODUxYmQ1ZGUzOC5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.3qCLPuji3P1qeKmTuxrPwKCFCmJKwfig5_1rQOn5l9w">
             <a-asset-item id="table" src="gltf/Table_01.gltf"></a-asset-item>
         </a-assets>
@@ -44,41 +43,383 @@
 
             <!-- Room -->
             <!-- Sky-->
-            <a-box class="sky" position="0 5.5 -2" scale="20 1 20" src="#floor"></a-box>
+            <a-box class="sky" position="0 5.5 -2" scale="20 1 20" color="#FFAAFF"></a-box>
 
 
             <a-sky color="#333"></a-sky>
             <!-- Ground-->
-            <a-plane rotation="-90 0 0" position="0 0 -2" scale="20 20 1" src="#floor" repeat="5 5"></a-plane>
+            <a-plane rotation="-90 0 0" position="0 0 -2" scale="20 20 1" color="#FFAAFF"></a-plane>
 
             <!-- Walls-->
-            <a-box class="wall" position="10 2.5 -2" scale="1 5 20" src="#wall" repeat="10 10"></a-box>
-            <a-box class="wall" position="-10 2.5 -2" scale="1 5 20" src="#wall" repeat="10 10"></a-box>
-            <a-box class="wall" position="0 2.5 -6" scale="20 5 1" src="#wall" repeat="10 10"></a-box>
-            <a-box class="wall" position="0 2.5 8" scale="20 5 1" src="#wall"repeat="10 10"></a-box>
+            <a-box class="wall" position="10 2.5 -2" scale="1 5 20" color="#0000FF"></a-box>
+            <a-box class="wall" position="-10 2.5 -2" scale="1 5 20" color="#0000FF"></a-box>ss
+            <a-box class="wall" position="0 2.5 -6" scale="20 5 1" color="#0000FF"></a-box>
+            <a-box class="wall" position="0 2.5 8" scale="20 5 1" color="#0000FF"></a-box>
 
 {#            <a-gltf-model src="#board" position="0 2 -3" scale="0.5 0.5 0.5"></a-gltf-model>#}
             <a-entity text="font: https://cdn.aframe.io/fonts/Roboto-msdf.json; value: World!; color: #000000" position="0 1.9 -6"></a-entity>
-            <a-gltf-model class="table" src="#table" position="0 0 -1.5" scale="0.5 0.11 0.2"></a-gltf-model>
+{#            <a-gltf-model class="table" src="#table" position="0 0 -1.5" scale="0.5 0.11 0.2"></a-gltf-model>#}
+
+            <!-- Table -->
+            <a-cylinder class="table"
+                        position="0 1.2 0"
+                        height="0.02" color="#8ae0f4"
+                        segments-height="1" segments-radial="6">
+            </a-cylinder>
 
         </a-entity>
 
-        <a-gui-flex-container flex-direction="column" justify-content="center" align-items="normal" component-padding="0.1" opacity="0.7" width="3.5" height="4.5" position="2 2.5 -4" rotation="0 0 0">
-{#            <!-- Camera + cursor. -->#}
-{#            <a-entity id="cameraRig" position="0 1.6 0">#}
-{#                <a-camera look-controls wasd-controls position="0 0 0">#}
-{#                    <a-gui-cursor id="cursor" raycaster="objects: [gui-interactable]" fuse="true" fuse-timeout="2000" design="ring">#}
-{#                    </a-gui-cursor> <!-- /cursor -->#}
-{#                </a-camera> <!-- /camera -->#}
-{#            </a-entity>#}
 
-            <a-gui-button
+        <a-gui-flex-container
+                class="window"
+                flex-direction="column"
+                justify-content="center"
+                align-items="normal"
+                component-padding="0.1"
+                opacity="0.7"
+                width="6"
+                height="1.4"
+                position="-4 4 -4"
+                rotation="0 0 0">
+
+{#            <a-gui-input#}
+{#                    class="text"#}
+{#                    position="0 2 0.010"#}
+{#                    width="5.5" height="0.75"#}
+{#                    value="Hello Worl"#}
+{#                    margin="0 0 0.05 0"#}
+{#                    toggle="true"#}
+{#            >#}
+{#            </a-gui-input>#}
+
+            <a-gui-label
+                    class="textView"
                     width="2.5" height="0.75"
-                    value="test button"
+                    value="label text"
                     font-family="Arial"
-                    margin="0 0 0.01 0">
-            </a-gui-button>
+                    margin="0 0 0.05 0"
+            >
+            </a-gui-label>
+
         </a-gui-flex-container>
+
+        <a-entity class="guikeyboard" position="0 1 0">
+            <a-gui-flex-container
+                    class="guiKeyboardf1"
+                    flex-direction="row"
+                    justify-content="center"
+                    align-items="normal"
+                    component-padding="0.1"
+                    opacity="0.7"
+                    width="6"
+                    height="0.6"
+                    position="-4 1.4 -3"
+                    rotation="-21.5 0 0">
+
+                <a-gui-button
+                        class="1"
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction"
+                        value="q"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        class="2"
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction"
+                        value="w"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        class="3"
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction"
+                        value="e"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        class="4"
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction"
+                        value="r"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="t"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="y"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="u"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="i"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="o"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="p"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+            </a-gui-flex-container>
+
+            <a-gui-flex-container
+                    class="guiKeyboardf2"
+                    flex-direction="row"
+                    justify-content="center"
+                    align-items="normal"
+                    component-padding="0.1"
+                    opacity="0.7"
+                    width="6"
+                    height="0.6"
+                    position="-4 0.941 -2.829"
+                    rotation="-21.5 0 0">
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="a"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="s"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="d"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="f"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="g"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="h"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="j"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="k"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="l"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="ñ"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+            </a-gui-flex-container>
+
+
+            <a-gui-flex-container
+                    class="guiKeyboardf3"
+                    flex-direction="row"
+                    justify-content="center"
+                    align-items="normal"
+                    component-padding="0.1"
+                    opacity="0.7"
+                    width="6"
+                    height="0.6"
+                    position="-4 0.47 -2.65"
+                    rotation="-21.5 0 0">
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="z"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="x"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="c"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="v"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="b"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="n"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+                <a-gui-button
+                        width="0.5" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="m"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                ></a-gui-button>
+
+            </a-gui-flex-container>
+
+
+            <a-gui-flex-container
+                    class="guiKeyboardf3"
+                    flex-direction="row"
+                    justify-content="center"
+                    align-items="normal"
+                    component-padding="0.1"
+                    opacity="0.7"
+                    width="6"
+                    height="0.6"
+                    position="-4 -0.008 -2.469"
+                    rotation="-21.5 0 0">
+
+                <a-gui-button
+                        width="1" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="123"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                >
+                </a-gui-button>
+
+                <a-gui-button
+                        width="2" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="Space bar"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                >
+                </a-gui-button>
+                <a-gui-button
+                        width="1" height="0.5"
+                        onclick="testButtonAction" key-code="32"
+                        value="Enviar"
+                        margin="0 0 0.05 0"
+                        toggle="true"
+                >
+                </a-gui-button>
+            </a-gui-flex-container>
+            </a-entity>>
+
+
+        <!-- Camera + cursor. -->
+        <a-entity id="cameraRig" position="0 1.6 0">
+            <a-camera look-controls wasd-controls position="0 0 0">
+                <a-gui-cursor id="cursor"
+                              raycaster="objects: [gui-interactable]"
+                              fuse="false"
+                >
+                </a-gui-cursor> <!-- /cursor -->
+            </a-camera> <!-- /camera -->
+        </a-entity>
+
 
     </a-scene>
     <template>
@@ -100,6 +441,7 @@
 
     {% block javascripts %}
         <script src="{{ asset('js/script-gui-vr.js') }}"></script>
+        <script src="{{ asset('js/script-gui.js') }}"></script>
     {% endblock %}
 
 {% endblock %}
